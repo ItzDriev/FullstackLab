@@ -1,0 +1,12 @@
+@import "tailwindcss";
+:root {
+  --navBG: rgba(36, 38, 58);
+  --mainBG: rgba(25, 28, 43);
+  --mainBGAccent: rgb(19, 23, 37);
+  --alternating1: rgb(27, 28, 43);
+  --alternating2: rgb(23, 25, 39);
+}
+
+@theme {
+  --font-montserrat: "Montserrat", sans-serif;
+}
