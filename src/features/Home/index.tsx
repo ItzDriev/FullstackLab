@@ -11,7 +11,7 @@ function index() {
       <Navbar />
       <Sidebar setCollapsed={setCollapsed} collapsed={collapsed} />
       <div className="z-1 relative flex flex-col">
-        <div className="z-1 absolute inset-0 bg-aurora pointer-events-none"></div>
+        <div className="z-1 absolute inset-0 pointer-events-none"></div>
         <div className="flex w-full h-auto">
           <div
             className={`relative z-19 flex flex-col bg-(--navBG) border-red-500 border-r shrink-0 transition-all duration-300 ${
