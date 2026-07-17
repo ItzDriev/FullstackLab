@@ -2,9 +2,9 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
-import NotFoundPage from "./components/NotFoundPage";
-import Home from "./features/Home/index";
-import Login from "./features/Login/index";
+import NotFoundPage from "./frontend/components/NotFoundPage";
+import Home from "./frontend/features/Home/index";
+import Login from "./frontend/features/Login/index";
 
 const router = createBrowserRouter([
   {
