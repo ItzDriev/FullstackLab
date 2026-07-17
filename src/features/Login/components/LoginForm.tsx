@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { KeyRound, User } from "lucide-react";
 import InputField from "../../../components/InputField";
+import BigButton from "../../../components/BigButton";
+import NavLink from "../../../layouts/Navigation/NavLink";
 
-function LoginForm() {
+interface Props {
+  setRegister: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function LoginForm({ setRegister }: Props) {
   const [passShown, setPassShown] = useState(false);
   return (
     <main className="flex justify-center items-center bg-(--navBG)/80 shadow-[0_4px_12px_rgba(0,0,0,0.25),0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur-lg border border-red-500 w-1/4 h-3/4">
@@ -60,6 +66,20 @@ function LoginForm() {
               )}
             </div>
           </div>
+        </div>
+        <BigButton className="mt-15 w-full" text={"Login"}></BigButton>
+        <div className="flex justify-between items-center gap-3 mt-3 pb-10 border-red-500 border-b">
+          <NavLink
+            to={"/Recover"}
+            text={"Recover Access"}
+            className="text-[#94A3B8]! text-xs!"
+          />
+          <span
+            className="px-2 py-1 rounded-xs text-[#94A3B8]! text-[1.2rem] text-xs! text-center cursor-pointer"
+            onClick={() => setRegister(true)}
+          >
+            Register New User
+          </span>
         </div>
       </form>
     </main>
