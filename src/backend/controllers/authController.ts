@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { User } from "../models/User.ts";
+import JWTModel from "../models/JWT.ts";
 import bcrypt from "bcrypt";
 
 export async function register(req: Request, res: Response): Promise<void> {
@@ -85,13 +86,49 @@ export async function register(req: Request, res: Response): Promise<void> {
   console.log(req.body);
 }
 
-/* 
-export async function login({ req, res }: Props): Promise<void> {
+export async function login(req: Request, res: Response): Promise<void> {
   try {
+    const { username, password } = req.body;
+
+    //Form checks
+    if (!username || !password) {
+      res
+        .status(400)
+        .json({ success: false, error: "Username and password are required" });
+      return;
+    }
+
+    if (typeof username !== "string" || typeof password !== "string") {
+      res.status(400).json({ success: false, error: "Invalid input format" });
+      return;
+    }
+
+    const user = await User.findOne({ username });
+
+    //Username check
+    if (!user) {
+      res
+        .status(401)
+        .json({ success: false, error: "Invalid username or password" });
+      return;
+    }
+
+    //Password check
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      res
+        .status(401)
+        .json({ success: false, error: "Invalid username or password" });
+    }
+
+    //Create the JWT
+
+    const token = JWTModel.sign({ userId: user._id, username: user.username });
   } catch (error) {}
   console.log(req.body);
 }
-export async function logout({ req, res }: Props): Promise<void> {
+/* 
+export async function logout(req: Request, res: Response): Promise<void> {
   try {
   } catch (error) {}
   console.log(req.body);
