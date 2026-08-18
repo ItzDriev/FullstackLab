@@ -1,13 +1,8 @@
 import type { Request, Response } from "express";
-import { User } from "../models/User";
+import { User } from "../models/User.ts";
 import bcrypt from "bcrypt";
 
-interface Props {
-  req: Request;
-  res: Response;
-}
-
-export async function register({ req, res }: Props): Promise<void> {
+export async function register(req: Request, res: Response): Promise<void> {
   try {
     const { fullName, username, email, password } = req.body;
 

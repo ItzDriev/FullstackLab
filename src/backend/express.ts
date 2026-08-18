@@ -14,6 +14,8 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 //Needed for secure cookies,
 app.set("trust proxy", 1);
+//Needed for express to parse incomming json from the frontend
+app.use(express.json());
 
 const allowedOrigins = ["http://localhost:5173"];
 
