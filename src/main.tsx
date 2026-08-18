@@ -5,6 +5,7 @@ import "./index.css";
 import NotFoundPage from "./frontend/components/NotFoundPage";
 import Home from "./frontend/features/Home/index";
 import Login from "./frontend/features/Login/index";
+import { AuthProvider } from "./frontend/context/AuthContext";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 );

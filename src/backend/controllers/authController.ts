@@ -153,3 +153,25 @@ export async function logout(req: Request, res: Response): Promise<void> {
   console.log(req.body);
 }
 */
+
+export async function getMe(req: Request, res: Response): Promise<void> {
+  try {
+    const userId = res.locals.jwt?.userId || (req as any).user?.userId;
+    //const user = await User.findById(userId).select("username profilePicture");
+    const user = await User.findById(userId).select("username");
+
+    if (!user) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+
+    res.json({
+      user: {
+        userId: user._id,
+        username: user.username,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch user" });
+  }
+}

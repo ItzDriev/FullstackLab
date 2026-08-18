@@ -5,9 +5,11 @@ import NavLink from "./NavLink";
 //import NavLinkDropDown from "./NavLinkDropDown";
 import useTwitchLiveStatus from "../../hooks/useTwitchLiveStatus";
 import BigButton from "../../components/BigButton";
+import { useAuth } from "../../context/AuthContext";
 
 function Navbar() {
   const isLive = useTwitchLiveStatus();
+  const { isLoggedIn } = useAuth();
   const hoverEffects =
     "relative after:absolute after:left-0 after:bottom-0 after:h-[3px] after:w-full after:bg-red-500 after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100 hover:text-red-500 transition-colors duration-300";
 
@@ -52,11 +54,15 @@ function Navbar() {
         <nav className="hidden md:flex items-center gap-10 mr-40 h-full">
           <NavLink to={"/"} text={"Home"} className={hoverEffects} />
           <NavLink to={"/nothing"} text={"About"} className={hoverEffects} />
-          <BigButton
-            text="Login"
-            className="hidden md:block shadow-none mr-8 px-2! py-2! text-sm!"
-            onClick={() => navigate("/login")}
-          />
+          {isLoggedIn ? (
+            <></>
+          ) : (
+            <BigButton
+              text="Login"
+              className="hidden md:block shadow-none mr-8 px-2! py-2! text-sm!"
+              onClick={() => navigate("/login")}
+            />
+          )}
         </nav>
 
         {/*THe burger Menu */}
