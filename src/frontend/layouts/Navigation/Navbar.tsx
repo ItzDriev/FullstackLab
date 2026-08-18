@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavLink from "./NavLink";
-import NavLinkDropDown from "./NavLinkDropDown";
+//import NavLinkDropDown from "./NavLinkDropDown";
 import useTwitchLiveStatus from "../../hooks/useTwitchLiveStatus";
 import BigButton from "../../components/BigButton";
 
@@ -11,8 +11,8 @@ function Navbar() {
   const hoverEffects =
     "relative after:absolute after:left-0 after:bottom-0 after:h-[3px] after:w-full after:bg-red-500 after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100 hover:text-red-500 transition-colors duration-300";
 
-  const hoverColorBright = " hover:bg-red-400";
-  const dropDownStyle = " h-14 flex items-center" + hoverColorBright;
+  //const hoverColorBright = " hover:bg-red-400";
+  //const dropDownStyle = " h-14 flex items-center" + hoverColorBright;
   const sidebarNavLinkStyle = " pt-5";
 
   const [navOpen, setNavOpen] = useState(false);
@@ -27,7 +27,11 @@ function Navbar() {
       >
         <div className="flex items-center ml-8 md:ml-15">
           <NavLink
-            to={"/"}
+            to={
+              import.meta.env.VITE_DEV === "false"
+                ? "/random-route-1"
+                : "/random-route-2"
+            }
             className={"font-bold text-2xl!"}
             text="Driev's Coaching"
           />

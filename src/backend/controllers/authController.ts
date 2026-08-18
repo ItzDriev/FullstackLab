@@ -89,6 +89,8 @@ export async function register({ req, res }: Props): Promise<void> {
   } catch (error) {}
   console.log(req.body);
 }
+
+/* 
 export async function login({ req, res }: Props): Promise<void> {
   try {
   } catch (error) {}
@@ -99,3 +101,4 @@ export async function logout({ req, res }: Props): Promise<void> {
   } catch (error) {}
   console.log(req.body);
 }
+*/
