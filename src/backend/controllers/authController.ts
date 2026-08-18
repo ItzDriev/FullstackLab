@@ -124,8 +124,27 @@ export async function login(req: Request, res: Response): Promise<void> {
     //Create the JWT
 
     const token = JWTModel.sign({ userId: user._id, username: user.username });
-  } catch (error) {}
-  console.log(req.body);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      //Prevent production from sending cookie of https but allow it locally
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      //maxAge is in miliseconds so this is 24hrs
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    res.json({
+      success: true,
+      data: {
+        userId: user._id,
+        username: user.username,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: "Login failed" });
+  }
 }
 /* 
 export async function logout(req: Request, res: Response): Promise<void> {
