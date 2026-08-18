@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { User } from "../models/User";
+import bcrypt from "bcrypt";
 
 interface Props {
   req: Request;
@@ -55,11 +56,36 @@ export async function register({ req, res }: Props): Promise<void> {
       return;
     }
 
-    //Check if user exists
+    //Check if email is available
+    const emailInUse = await User.findOne({ email });
+
+    if (emailInUse) {
+      res.status(400).json({ success: false, error: "Email already in use" });
+    }
+
+    // Check if username is available
+    const usernameInUse = await User.findOne({ username });
+    if (usernameInUse) {
+      res
+        .status(400)
+        .json({ success: false, error: "Username already in use" });
+    }
 
     //Encrypt passwword
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     //Create user
+    const user = await User.create({
+      fullName,
+      username,
+      email,
+      password: hashedPassword,
+    });
+
+    res.status(201).json({
+      success: true,
+      data: { userId: user._id, username: user.username },
+    });
   } catch (error) {}
   console.log(req.body);
 }
