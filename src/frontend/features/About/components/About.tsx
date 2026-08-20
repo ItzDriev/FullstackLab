@@ -15,15 +15,17 @@ function about() {
         <section className="flex justify-center items-center w-full h-full">
           {/*Left Side */}
           <section className="flex flex-col justify-center items-center px-20 w-full h-full">
-            <h1 className="pb-3 font-montserrat font-bold text-5xl">
-              About Me
-            </h1>
+            <div className="flex justify-start w-full">
+              <h1 className="pb-3 pl-3 font-montserrat font-bold text-7xl">
+                About Me
+              </h1>
+            </div>
 
             {/*Top Box */}
             <div className="bg-(--mainBG)/67 w-full min-h-[30%] border-2 border-red-500 rounded-sm flex flex-col items-center shadow-[0_0_10px_rgba(255,45,45,0.8)]">
               <div className="flex flex-col items-center py-2 font-montserrat font-bold text-lg text-center">
                 <div className="flex flex-col items-center w-full">
-                  <h1 className="text-white">Credentials</h1>
+                  <h1 className="text-white text-3xl">Credentials</h1>
                   <hr className="mt-1 w-[95%]" />
                 </div>
                 <div className="flex justify-center items-center gap-15 py-2 text-red-500">
@@ -52,7 +54,24 @@ function about() {
               </div>
             </div>
             {/*Bottom Box */}
-            <div className="bg-(--mainBG)/70 h-50 w-full rounded-sm border-2 mt-5 "></div>
+            <div className="bg-(--mainBG)/70 h-50 w-full rounded-sm border-2 mt-5 ">
+              <div className="p-6">
+                <h1 className="font-montserrat font-bold text-red-300 text-2xl">
+                  Introduction
+                </h1>
+                <hr className="mb-2 text-red-300" />
+                <span className="font-bold">
+                  Hey, I'm Anton 'Driev' Andersson
+                </span>
+                <p className="mt-1">
+                  I'm a World of Warcraft player who mains the 'Warrior' class
+                  and specializes in high-level PvE raiding performance. I'm the
+                  most proficient specifically in the VANILLA version of World
+                  of Warcraft, however I am pretty decent in Retail as well
+                  despite having barely played it.
+                </p>
+              </div>
+            </div>
           </section>
           {/*Right Side */}
           <section className="flex justify-center w-full">
