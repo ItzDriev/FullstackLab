@@ -5,6 +5,7 @@ import BigButton from "../../../components/BigButton";
 import NavLink from "../../../layouts/Navigation/NavLink";
 import { login } from "../backend/login";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
 
 interface Props {
   setRegister: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,11 +15,13 @@ function LoginForm({ setRegister }: Props) {
   const [passShown, setPassShown] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser } = useAuth();
   const navigate = useNavigate();
 
   async function handleLogin() {
     const result = await login(username, password);
     if (result.success) {
+      setUser(result.data);
       navigate("/");
       console.log("Logged in:", result.data);
     } else {
