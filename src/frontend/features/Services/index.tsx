@@ -1,8 +1,16 @@
+import Navbar from "../../layouts/Navigation/Navbar";
+import Footer from "../../layouts/Navigation/Footer";
+import Services from "./components/Services";
+
 function index() {
   return (
-    <div>
-      <div></div>
-    </div>
+    <main className="relative bg-(--mainBG) w-full overflow-x-hidden">
+      <Navbar />
+
+      <Services />
+
+      <Footer />
+    </main>
   );
 }
 

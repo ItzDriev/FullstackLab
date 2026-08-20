@@ -68,7 +68,7 @@ function about() {
                   and specializes in high-level PvE raiding performance. I'm the
                   most proficient specifically in the VANILLA version of World
                   of Warcraft, however I am pretty decent in Retail as well
-                  despite having barely played it.
+                  despite having barely played it
                 </p>
               </div>
             </div>
