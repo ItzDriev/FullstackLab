@@ -12,7 +12,7 @@ function index() {
       <img
         src="/Zecheii.png"
         alt="Background"
-        className="absolute inset-0 w-full h-full object-cover object-left translate-x-0"
+        className="fixed inset-0 w-full h-full object-cover object-left"
       />
 
       {/* Dark overlay */}
