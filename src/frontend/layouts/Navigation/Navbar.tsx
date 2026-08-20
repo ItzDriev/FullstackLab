@@ -53,8 +53,12 @@ function Navbar() {
         {/*The hidden applies to all screen sizes but the md:flex overrides it at screens >=768px the flex basically makes it visible */}
         <nav className="hidden md:flex items-center gap-10 mr-40 h-full">
           <NavLink to={"/"} text={"Home"} className={hoverEffects} />
-          <NavLink to={"/nothing"} text={"Services"} className={hoverEffects} />
-          <NavLink to={"/nothing"} text={"About"} className={hoverEffects} />
+          <NavLink
+            to={"/services"}
+            text={"Services"}
+            className={hoverEffects}
+          />
+          <NavLink to={"/about"} text={"About"} className={hoverEffects} />
           {isLoggedIn ? (
             <></>
           ) : (
@@ -99,7 +103,12 @@ function Navbar() {
             className={hoverEffects + sidebarNavLinkStyle}
           />
           <NavLink
-            to={"/BIGBLACKBROLICDUDES"}
+            to={"/services"}
+            text={"Services"}
+            className={hoverEffects}
+          />
+          <NavLink
+            to={"/about"}
             text={"About"}
             className={hoverEffects + sidebarNavLinkStyle}
           />

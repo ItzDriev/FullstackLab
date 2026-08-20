@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import BigButton from "../../../components/BigButton";
 import useTitle from "../../../hooks/useTitle";
+import { useAuth } from "../../../context/AuthContext";
 
 function Home() {
   useTitle("Home");
   const navigate = useNavigate();
+  const isLoggedIn = useAuth();
 
   //const twitchChatSrc = `https://www.twitch.tv/embed/drievtv/chat?parent=${parent}`;
   return (
@@ -32,11 +34,16 @@ function Home() {
             improvment
           </p>
           <div className="flex gap-4">
-            <BigButton
-              text="Get Started"
-              className="px-8! py-3! text-sm!"
-              onClick={() => navigate("/profile")}
-            />
+            {isLoggedIn ? (
+              <BigButton
+                text="Get Started"
+                className="px-8! py-3! text-sm!"
+                onClick={() => navigate("/login")}
+              />
+            ) : (
+              <></>
+            )}
+
             <button
               onClick={() => navigate("/services")}
               className="px-8 py-3 border border-[#1a2d42] hover:border-red-500/40 font-bold text-[#94A3B8] hover:text-white text-sm uppercase tracking-widest transition-all cursor-pointer"
