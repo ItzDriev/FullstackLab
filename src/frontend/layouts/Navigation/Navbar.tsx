@@ -6,6 +6,7 @@ import NavLink from "./NavLink";
 import useTwitchLiveStatus from "../../hooks/useTwitchLiveStatus";
 import BigButton from "../../components/BigButton";
 import { useAuth } from "../../context/AuthContext";
+import ProfileIcon from "./ProfileIcon";
 
 function Navbar() {
   const isLive = useTwitchLiveStatus();
@@ -59,16 +60,17 @@ function Navbar() {
             className={hoverEffects}
           />
           <NavLink to={"/about"} text={"About"} className={hoverEffects} />
-          {isLoggedIn ? (
-            <></>
-          ) : (
-            <BigButton
-              text="Login"
-              className="hidden md:block shadow-none mr-8 px-2! py-2! text-sm!"
-              onClick={() => navigate("/login")}
-            />
-          )}
         </nav>
+
+        {isLoggedIn ? (
+          <ProfileIcon></ProfileIcon>
+        ) : (
+          <BigButton
+            text="Login"
+            className="hidden md:block shadow-none mr-8 px-2! py-2! text-sm!"
+            onClick={() => navigate("/login")}
+          />
+        )}
 
         {/*THe burger Menu */}
         <div
