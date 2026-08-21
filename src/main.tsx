@@ -8,6 +8,7 @@ import Login from "./frontend/features/Login/index";
 import { AuthProvider } from "./frontend/context/AuthContext";
 import Services from "./frontend/features/Services/index";
 import About from "./frontend/features/About/index";
+import Profile from "./frontend/features/Profile/index";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,11 @@ const router = createBrowserRouter([
   {
     path: "/about",
     element: <About />,
+    errorElement: <NotFoundPage />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
     errorElement: <NotFoundPage />,
   },
 ]);

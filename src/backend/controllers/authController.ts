@@ -146,13 +146,10 @@ export async function login(req: Request, res: Response): Promise<void> {
     res.status(500).json({ success: false, error: "Login failed" });
   }
 }
-/* 
-export async function logout(req: Request, res: Response): Promise<void> {
-  try {
-  } catch (error) {}
-  console.log(req.body);
+export async function logout(_req: Request, res: Response): Promise<void> {
+  res.clearCookie("token");
+  res.json({ success: true, message: "Logged out successfully" });
 }
-*/
 
 export async function getMe(req: Request, res: Response): Promise<void> {
   try {

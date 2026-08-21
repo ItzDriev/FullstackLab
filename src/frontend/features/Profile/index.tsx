@@ -1,0 +1,22 @@
+import Navbar from "../../layouts/Navigation/Navbar";
+import Footer from "../../layouts/Navigation/Footer";
+
+function index() {
+  return (
+    <main className="bg-(--mainBG) w-full h-auto">
+      <Navbar />
+      <img
+        src="/Zecheii.png"
+        alt="Background"
+        className="fixed inset-0 w-full h-full object-cover object-left"
+      />
+
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/30 blur-5xl" />
+      <div className="w-full h-[calc(100vh-4rem)] bg-(--mainBG) flex justify-center items-center"></div>
+      <Footer />
+    </main>
+  );
+}
+
+export default index;

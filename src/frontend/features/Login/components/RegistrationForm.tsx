@@ -133,7 +133,7 @@ function RegistrationForm({ setRegister }: Props) {
             className="px-2 py-1 rounded-xs text-[#94A3B8]! text-[1.2rem] text-xs! text-center cursor-pointer"
             onClick={() => setRegister(false)}
           >
-            Register New User
+            Login
           </span>
         </div>
       </form>
