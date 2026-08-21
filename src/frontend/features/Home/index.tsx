@@ -13,7 +13,7 @@ function index() {
       <div className="z-1 relative flex flex-col">
         <div className="flex w-full h-auto">
           <div
-            className={`relative z-19 flex flex-col bg-(--navBG) border-red-500 border-r shrink-0 transition-all duration-300 ${
+            className={`relative z-19 flex flex-col bg-black/30 shrink-0 transition-all duration-300 ${
               collapsed ? "w-20" : "w-64"
             }`}
           ></div>

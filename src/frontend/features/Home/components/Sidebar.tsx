@@ -31,7 +31,7 @@ function Sidebar({ setCollapsed, collapsed }: SidebarProps) {
 
   return (
     <aside
-      className={`fixed z-20 flex flex-col bg-(--navBG) border-red-500 border-r h-[calc(100vh-4rem)] shrink-0 transition-all  duration-300 ${
+      className={`fixed z-20 flex flex-col bg-(--navBG) border-red-500 border-r h-[calc(100vh-4rem)] shrink-0 transition-all animate-slide-in-left duration-300 ${
         collapsed ? "w-20" : "w-64"
       }`}
     >
