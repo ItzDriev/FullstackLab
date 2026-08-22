@@ -2,7 +2,7 @@ import { Schema, model, Types } from "mongoose";
 
 interface BookingProps {
   userId: Types.ObjectId;
-  serviceType: "Vod Review" | "Hands-On Session" | "Macro & UI Assistance";
+  serviceType: "VOD Review" | "Hands-On Session" | "Macro & UI Assistance";
   requestedTime: Date;
   status: "pending" | "confirmed" | "cancelled" | "completed";
   notes?: string;

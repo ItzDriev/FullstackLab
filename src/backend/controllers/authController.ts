@@ -58,6 +58,7 @@ export async function register(req: Request, res: Response): Promise<void> {
 
     if (emailInUse) {
       res.status(409).json({ success: false, error: "Email already in use" });
+      return;
     }
 
     // Check if username is available
@@ -66,6 +67,7 @@ export async function register(req: Request, res: Response): Promise<void> {
       res
         .status(409)
         .json({ success: false, error: "Username already in use" });
+      return;
     }
 
     //Encrypt passwword
