@@ -1,4 +1,5 @@
 import type { Request, Response } from "express";
+import type { AuthRequest } from "../middleware/jwtMiddleware.ts";
 import { User } from "../models/User.ts";
 import JWTModel from "../models/JWT.ts";
 import bcrypt from "bcrypt";
@@ -123,7 +124,11 @@ export async function login(req: Request, res: Response): Promise<void> {
 
     //Create the JWT
 
-    const token = JWTModel.sign({ userId: user._id, username: user.username });
+    const token = JWTModel.sign({
+      userId: user._id,
+      username: user.username,
+      role: user.role,
+    });
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -139,6 +144,7 @@ export async function login(req: Request, res: Response): Promise<void> {
       data: {
         userId: user._id,
         username: user.username,
+        role: user.role,
       },
     });
   } catch (error) {
@@ -151,11 +157,10 @@ export async function logout(_req: Request, res: Response): Promise<void> {
   res.json({ success: true, message: "Logged out successfully" });
 }
 
-export async function getMe(req: Request, res: Response): Promise<void> {
+export async function getMe(req: AuthRequest, res: Response): Promise<void> {
   try {
-    const userId = res.locals.jwt?.userId || (req as any).user?.userId;
-    //const user = await User.findById(userId).select("username profilePicture");
-    const user = await User.findById(userId).select("username");
+    const userId = req.user?.userId;
+    const user = await User.findById(userId).select("username role");
 
     if (!user) {
       res.status(404).json({ error: "User not found" });
@@ -166,6 +171,7 @@ export async function getMe(req: Request, res: Response): Promise<void> {
       user: {
         userId: user._id,
         username: user.username,
+        role: user.role,
       },
     });
   } catch (error) {

@@ -5,6 +5,7 @@ interface AuthRequest extends Request {
   user?: {
     userId: string;
     username: string;
+    role: "user" | "admin";
   };
 }
 
@@ -23,6 +24,7 @@ export function authenticate(
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
       userId: string;
       username: string;
+      role: "user" | "admin";
     };
 
     req.user = decoded;
@@ -31,6 +33,22 @@ export function authenticate(
     console.log(error);
     res.status(401).json({ error: "Invalid or expired token" });
   }
+}
+
+export function requireRole(...allowedRoles: Array<"user" | "admin">) {
+  return (req: AuthRequest, res: Response, next: NextFunction): void => {
+    if (!req.user) {
+      res.status(401).json({ error: "Not Authenticated" });
+      return;
+    }
+
+    if (!allowedRoles.includes(req.user.role)) {
+      res.status(403).json({ error: "Forbidden" });
+      return;
+    }
+
+    next();
+  };
 }
 
 export type { AuthRequest };

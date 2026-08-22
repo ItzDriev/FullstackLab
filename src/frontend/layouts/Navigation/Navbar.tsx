@@ -10,7 +10,7 @@ import ProfileIcon from "./ProfileIcon";
 
 function Navbar() {
   const isLive = useTwitchLiveStatus();
-  const { isLoggedIn } = useAuth();
+  const auth = useAuth();
   const hoverEffects =
     "relative after:absolute after:left-0 after:bottom-0 after:h-[3px] after:w-full after:bg-red-500 after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100 hover:text-red-500 transition-colors duration-300";
 
@@ -62,7 +62,7 @@ function Navbar() {
           <NavLink to={"/about"} text={"About"} className={hoverEffects} />
         </nav>
 
-        {isLoggedIn ? (
+        {auth.isLoggedIn ? (
           <ProfileIcon></ProfileIcon>
         ) : (
           <BigButton

@@ -6,7 +6,7 @@ import { useAuth } from "../../../context/AuthContext";
 function Home() {
   useTitle("Home");
   const navigate = useNavigate();
-  const isLoggedIn = useAuth();
+  const auth = useAuth();
 
   //const twitchChatSrc = `https://www.twitch.tv/embed/drievtv/chat?parent=${parent}`;
   return (
@@ -34,14 +34,18 @@ function Home() {
             improvment
           </p>
           <div className="flex gap-4">
-            {isLoggedIn ? (
+            {auth.isLoggedIn ? (
+              <BigButton
+                text="Profile"
+                className="px-8! py-3! text-sm!"
+                onClick={() => navigate(`/profile/${auth.user?.username}`)}
+              />
+            ) : (
               <BigButton
                 text="Get Started"
                 className="px-8! py-3! text-sm!"
                 onClick={() => navigate("/login")}
               />
-            ) : (
-              <></>
             )}
 
             <button

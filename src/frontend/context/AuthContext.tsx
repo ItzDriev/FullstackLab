@@ -5,6 +5,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 interface User {
   userId: string;
   username: string;
+  role: "user" | "admin";
   profilePicture?: string;
 }
 
@@ -12,6 +13,7 @@ interface AuthContextType {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   isLoggedIn: boolean;
+  isAdmin: boolean;
   loading: boolean;
   logout: () => Promise<void>;
   updateProfilePicture: (base64: string) => Promise<boolean>;
@@ -87,6 +89,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         user,
         setUser,
         isLoggedIn: user !== null,
+        isAdmin: user?.role === "admin",
         loading,
         logout,
         updateProfilePicture,

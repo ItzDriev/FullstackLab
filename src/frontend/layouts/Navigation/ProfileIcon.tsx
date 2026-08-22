@@ -8,10 +8,10 @@ interface ProfileIconProps {
 }
 
 function ProfileIcon({ className = "", dropDown = true }: ProfileIconProps) {
-  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const auth = useAuth();
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -33,7 +33,7 @@ function ProfileIcon({ className = "", dropDown = true }: ProfileIconProps) {
   }
 
   async function handleLogout() {
-    await logout();
+    await auth.logout();
     setOpen(false);
     navigate("/login");
   }
@@ -44,15 +44,15 @@ function ProfileIcon({ className = "", dropDown = true }: ProfileIconProps) {
         className={`flex justify-center items-center rounded-full w-12 h-12 font-bold text-2xl cursor-pointer select-none overflow-hidden ${className}`}
         onClick={() => setOpen(!open)}
       >
-        {user?.profilePicture ? (
+        {auth.user?.profilePicture ? (
           <img
-            src={user.profilePicture}
+            src={auth.user.profilePicture}
             alt="Profile"
             className="w-full h-full object-cover"
           />
         ) : (
           <div className="flex justify-center items-center bg-red-500 w-full h-full text-white">
-            {user?.username.charAt(0)}
+            {auth.user?.username.charAt(0)}
           </div>
         )}
       </div>
@@ -60,11 +60,13 @@ function ProfileIcon({ className = "", dropDown = true }: ProfileIconProps) {
       {open && dropDown && (
         <div className="-right-5 absolute bg-[#0a1628] shadow-lg mt-2 border border-[#122030] rounded w-48">
           <div className="px-4 py-3 border-[#122030] border-b">
-            <p className="font-bold text-white text-sm">{user?.username}</p>
+            <p className="font-bold text-white text-sm">
+              {auth.user?.username}
+            </p>
           </div>
 
           <button
-            onClick={() => handleNavigate("/profile")}
+            onClick={() => handleNavigate(`/profile/${auth.user?.username}`)}
             className="hover:bg-[#122030] px-4 py-2 w-full text-[#94A3B8] hover:text-white text-sm text-left transition-colors cursor-pointer"
           >
             Profile

@@ -32,7 +32,7 @@ const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
   },
   {
-    path: "/profile",
+    path: "/profile/:username",
     element: <Profile />,
     errorElement: <NotFoundPage />,
   },

@@ -4,6 +4,7 @@ interface UserProps {
   username: string;
   email: string;
   password: string;
+  role: "user" | "admin";
 }
 
 const userSchema = new Schema<UserProps>(
@@ -18,6 +19,7 @@ const userSchema = new Schema<UserProps>(
         /^(?:[a-zA-Z0-9!#$%&'+/=?^_`{|}~-]+(?:.[a-zA-Z0-9!#$%&'+/=?^_`{|}~-]+)|"(?:(?:\[\x00-\x7F]|[^\"]))")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?.)+[a-zA-Z]{2,}|(?:[(?:\d{1,3}.){3}\d{1,3}]))$/,
     },
     password: { type: String, required: true },
+    role: { type: String, enum: ["user", "admin"], default: "user" },
   },
   { timestamps: true },
 );
