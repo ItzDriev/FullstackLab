@@ -41,11 +41,11 @@ export async function register(req: Request, res: Response): Promise<void> {
       return;
     }
 
-    //password must be returned as a string and at least 8 charcters
-    if (typeof password !== "string" || password.length < 8) {
+    //password must be returned as a string and longer than 8 characters
+    if (typeof password !== "string" || password.length <= 8) {
       res.status(400).json({
         success: false,
-        error: "Password must be at least 8 characters",
+        error: "Password must be longer than 8 characters",
       });
       return;
     }

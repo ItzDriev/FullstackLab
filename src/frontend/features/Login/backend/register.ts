@@ -41,7 +41,7 @@ export async function register(
   if (!/[0-9]/.test(password)) {
     return {
       success: false,
-      error: "Password must contain at least one uppercase letter",
+      error: "Password must contain at least one number",
     };
   }
 

@@ -15,17 +15,25 @@ function LoginForm({ setRegister }: Props) {
   const [passShown, setPassShown] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
   const { setUser } = useAuth();
   const navigate = useNavigate();
 
   async function handleLogin() {
+    if (submitting) return;
+    //Clear the old message so a retry does not look like it did nothing
+    setError(null);
+    setSubmitting(true);
+
     const result = await login(username, password);
+
     if (result.success) {
       setUser(result.data);
       navigate("/");
-      console.log("Logged in:", result.data);
     } else {
-      console.log(result.error);
+      setError(result.error ?? "Something went wrong, please try again");
+      setSubmitting(false);
     }
   }
   return (
@@ -35,7 +43,13 @@ function LoginForm({ setRegister }: Props) {
       <div className="-right-3 -bottom-3 absolute border-red-500 border-r-2 border-b-2 w-20 h-20"></div>
 
       {/*The actual form */}
-      <form className="p-6 w-full">
+      <form
+        className="p-6 w-full"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleLogin();
+        }}
+      >
         <div className="pb-4 border-red-500 border-b">
           <h1 className="text-white text-2xl">Authentication</h1>
           <h2 className="font-light text-red-400">Login</h2>
@@ -91,9 +105,19 @@ function LoginForm({ setRegister }: Props) {
         </div>
         <BigButton
           className="mt-15 w-full"
-          text={"Login"}
-          onClick={handleLogin}
+          text={submitting ? "Signing in..." : "Login"}
+          type="submit"
+          disabled={submitting}
         ></BigButton>
+
+        {error && (
+          <p
+            role="alert"
+            className="mt-3 text-red-400 text-sm text-center"
+          >
+            {error}
+          </p>
+        )}
         <div className="flex justify-between items-center gap-3 mt-3 pb-10 border-red-500 border-b">
           <NavLink
             to={"/Recover"}

@@ -1,10 +1,8 @@
 //import React from "react";
-import { useNavigate } from "react-router-dom";
+
 import FooterLink from "./FooterLink";
 
 function Footer() {
-  const navigate = useNavigate();
-
   return (
     <footer className="relative z-20 bg-(--navBG) border-red-500 border-t">
       <div className="mx-auto px-8 py-5 max-w-5xl">

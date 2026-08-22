@@ -16,12 +16,27 @@ function RegistrationForm({ setRegister }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+
   async function handleRegister() {
+    if (submitting) return;
+    setError(null);
+    setSubmitting(true);
+
     const result = await register(fullName, username, email, password);
+
     if (result.success) {
-      setRegister(false);
+      /*
+        Show the confirmation for a moment before flipping back, otherwise
+        the form just swaps and it looks like nothing happened.
+      */
+      setSuccess("Account created! Taking you to the login form...");
+      setTimeout(() => setRegister(false), 1500);
     } else {
-      console.log(result.error);
+      setError(result.error ?? "Something went wrong, please try again");
+      setSubmitting(false);
     }
   }
   return (
@@ -31,7 +46,13 @@ function RegistrationForm({ setRegister }: Props) {
       <div className="-right-3 -bottom-3 absolute border-red-500 border-r-2 border-b-2 w-20 h-20"></div>
 
       {/*The actual form */}
-      <form className="p-6 w-full">
+      <form
+        className="p-6 w-full"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleRegister();
+        }}
+      >
         <div className="pb-4 border-red-500 border-b">
           <h1 className="text-white text-2xl">Authentication</h1>
           <h2 className="font-light text-red-400">Register</h2>
@@ -120,9 +141,21 @@ function RegistrationForm({ setRegister }: Props) {
         </div>
         <BigButton
           className="mt-15 w-full"
-          text={"Register"}
-          onClick={handleRegister}
+          text={submitting ? "Creating account..." : "Register"}
+          type="submit"
+          disabled={submitting}
         ></BigButton>
+
+        {error && (
+          <p role="alert" className="mt-3 text-red-400 text-sm text-center">
+            {error}
+          </p>
+        )}
+        {success && (
+          <p role="status" className="mt-3 text-green-400 text-sm text-center">
+            {success}
+          </p>
+        )}
         <div className="flex justify-between items-center gap-3 mt-3 mb-10 pb-10 border-red-500 border-b">
           <NavLink
             to={"/Recover"}
