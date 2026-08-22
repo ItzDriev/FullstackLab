@@ -7,6 +7,7 @@ interface InputFieldProps {
   onKeyDownFunc?: () => void;
   className?: string;
   placeholder: string;
+  ref?: React.Ref<HTMLInputElement>;
 }
 
 function InputField({
@@ -18,9 +19,11 @@ function InputField({
   onKeyDownFunc,
   className,
   placeholder,
+  ref,
 }: InputFieldProps) {
   return (
     <input
+      ref={ref}
       id={id}
       value={value}
       type={type}

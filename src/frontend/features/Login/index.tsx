@@ -1,11 +1,22 @@
 import Navbar from "../../layouts/Navigation/Navbar";
 import Footer from "../../layouts/Navigation/Footer";
 import LoginForm from "./components/LoginForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RegistrationForm from "./components/RegistrationForm";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function index() {
   const [register, setRegister] = useState(false);
+  const auth = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!auth.loading && auth.isLoggedIn) {
+      navigate("/");
+    }
+  }, [auth.loading, auth.isLoggedIn, navigate]);
+
   return (
     <main className="bg-(--mainBG) w-full h-auto">
       <Navbar />
