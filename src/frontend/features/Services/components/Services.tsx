@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import BigButton from "../../../components/BigButton";
-import { createBooking } from "../backend/booking.ts";
+import { createBooking } from "../../Booking/backend/booking.ts";
 
 function about() {
   const navigate = useNavigate();

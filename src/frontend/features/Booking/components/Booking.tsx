@@ -1,23 +1,44 @@
 import { useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import InputField from "../../../components/InputField";
 import BigButton from "../../../components/BigButton";
 import { service_types } from "../backend/serviceTypes";
+import { createBooking } from "../backend/booking";
+import { useAuth } from "../../../context/AuthContext";
 
 function BookingForm() {
   const { serviceType } = useParams();
   const serviceName = serviceType ? service_types[serviceType] : undefined;
+  const navigate = useNavigate();
+  const auth = useAuth();
 
   const [requestedTime, setRequestedTime] = useState("");
   const [notes, setNotes] = useState("");
   const dateInputRef = useRef<HTMLInputElement>(null);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [statusIsError, setStatusIsError] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function openDatePicker() {
     dateInputRef.current?.showPicker?.();
   }
 
-  function handleSubmit() {
-    // Backend wiring not implemented yet.
+  async function handleSubmit() {
+    if (!serviceName) return;
+    const result = await createBooking(serviceName, requestedTime, notes);
+    setIsSubmitting(true);
+
+    if (result.success) {
+      setStatusIsError(false);
+      setStatusMessage("Request sent! I'll confirm the session ASAP!");
+    } else {
+      setStatusIsError(true);
+      setStatusMessage(
+        result.error ?? "Something went wrong. Please try again",
+      );
+      setIsSubmitting(false);
+    }
+
     console.log({ serviceType: serviceName, requestedTime, notes });
   }
 
@@ -82,7 +103,6 @@ function BookingForm() {
                     />
                   </div>
                 </div>
-
                 <div className="mt-7 text-white">
                   <label
                     htmlFor="notes"
@@ -99,12 +119,20 @@ function BookingForm() {
                     onChange={(e) => setNotes(e.target.value)}
                   />
                 </div>
-
                 <BigButton
                   className="mt-10 w-full"
                   text="Request Booking"
                   type="submit"
+                  disabled={isSubmitting}
                 />
+
+                {statusMessage && (
+                  <p
+                    className={`mt-4 text-center text-sm ${statusIsError ? "text-red-400" : "text-green-400"}`}
+                  >
+                    {statusMessage}
+                  </p>
+                )}
               </>
             )}
           </form>
