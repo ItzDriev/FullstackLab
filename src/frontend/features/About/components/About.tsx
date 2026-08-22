@@ -27,8 +27,6 @@ function about() {
                     <h2 className="text-white text-3xl">Credentials</h2>
                     <hr className="mt-1 border-red-500/60 w-[95%]" />
                   </div>
-                  {/* Three equal columns so a stat can never wrap onto its
-                      own line. The dividers replace the old separators. */}
                   <div className="grid grid-cols-1 sm:grid-cols-3 mt-2 sm:divide-x divide-y sm:divide-y-0 divide-red-500/40 w-full">
                     <p className="px-3 py-3">
                       <span className="text-red-500">SUB 37</span>
