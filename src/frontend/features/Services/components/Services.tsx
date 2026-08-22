@@ -1,8 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import BigButton from "../../../components/BigButton";
+import { createBooking } from "../backend/booking.ts";
 
 function about() {
   const navigate = useNavigate();
+
+  async function handleBooking(
+    serviceType: string,
+    requestedTime: string,
+    notes?: string,
+  ) {
+    const result = await createBooking(serviceType, requestedTime, notes);
+    if (result.success) {
+      console.log(`Success booking ${serviceType}`);
+    }
+  }
 
   return (
     <section className="flex flex-col w-full min-h-[calc(100vh-4rem)] overflow-x-hidden">
@@ -40,7 +52,7 @@ function about() {
               <BigButton
                 text="Book Session"
                 className="px-8! py-3! text-sm!"
-                onClick={() => navigate("/login")}
+                onClick={() => navigate("/booking/vod-review")}
               />
             </div>
           </article>
@@ -62,7 +74,7 @@ function about() {
             </div>
             <div className="flex flex-col justify-center items-center mt-auto mb-4">
               <button
-                onClick={() => navigate("/services")}
+                onClick={() => navigate("/booking/hands-on-session")}
                 className="px-8 py-3 border border-[#1a2d42] hover:border-red-500/40 font-bold text-[#94A3B8] hover:text-white text-sm uppercase tracking-[0.3em] transition-all cursor-pointer"
               >
                 Book Session
@@ -90,7 +102,7 @@ function about() {
               <BigButton
                 text="Book Session"
                 className="px-8! py-3! text-sm!"
-                onClick={() => navigate("/login")}
+                onClick={() => navigate("/booking/macro-ui-assistance")}
               />
             </div>
           </article>

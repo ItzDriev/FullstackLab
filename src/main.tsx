@@ -9,6 +9,7 @@ import { AuthProvider } from "./frontend/context/AuthContext";
 import Services from "./frontend/features/Services/index";
 import About from "./frontend/features/About/index";
 import Profile from "./frontend/features/Profile/index";
+import Booking from "./frontend/features/Booking/index";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,11 @@ const router = createBrowserRouter([
   {
     path: "/profile/:username",
     element: <Profile />,
+    errorElement: <NotFoundPage />,
+  },
+  {
+    path: "/booking/:serviceType",
+    element: <Booking />,
     errorElement: <NotFoundPage />,
   },
 ]);

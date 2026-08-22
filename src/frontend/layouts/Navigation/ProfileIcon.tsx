@@ -41,25 +41,17 @@ function ProfileIcon({ className = "", dropDown = true }: ProfileIconProps) {
   return (
     <div className="z-[100] relative mr-8" ref={dropdownRef}>
       <div
-        className={`flex justify-center items-center rounded-full w-12 h-12 font-bold text-2xl cursor-pointer select-none overflow-hidden ${className}`}
+        className={`flex justify-center items-center hover:border-2 border-white rounded-full w-12 h-12 font-bold text-2xl cursor-pointer select-none overflow-hidden ${className}`}
         onClick={() => setOpen(!open)}
       >
-        {auth.user?.profilePicture ? (
-          <img
-            src={auth.user.profilePicture}
-            alt="Profile"
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <div className="flex justify-center items-center bg-red-500 w-full h-full text-white">
-            {auth.user?.username.charAt(0)}
-          </div>
-        )}
+        <div className="flex justify-center items-center bg-red-500 w-full h-full text-white">
+          {auth.user?.username.charAt(0)}
+        </div>
       </div>
 
       {open && dropDown && (
-        <div className="-right-5 absolute bg-[#0a1628] shadow-lg mt-2 border border-[#122030] rounded w-48">
-          <div className="px-4 py-3 border-[#122030] border-b">
+        <div className="-right-5 absolute bg-(--navBG) shadow-lg mt-2 border border-red-500 rounded-b w-48 translate-y-[-0.05rem] ">
+          <div className="px-4 py-3 border-red-500 border-b">
             <p className="font-bold text-white text-sm">
               {auth.user?.username}
             </p>
@@ -67,27 +59,27 @@ function ProfileIcon({ className = "", dropDown = true }: ProfileIconProps) {
 
           <button
             onClick={() => handleNavigate(`/profile/${auth.user?.username}`)}
-            className="hover:bg-[#122030] px-4 py-2 w-full text-[#94A3B8] hover:text-white text-sm text-left transition-colors cursor-pointer"
+            className="hover:bg-(--mainBGAccent) px-4 py-2 w-full text-[#94A3B8] hover:text-white text-sm text-left transition-colors cursor-pointer"
           >
             Profile
           </button>
           <button
             onClick={() => handleNavigate("/settings")}
-            className="hover:bg-[#122030] px-4 py-2 w-full text-[#94A3B8] hover:text-white text-sm text-left transition-colors cursor-pointer"
+            className="hover:bg-(--mainBGAccent) px-4 py-2 w-full text-[#94A3B8] hover:text-white text-sm text-left transition-colors cursor-pointer"
           >
             Settings
           </button>
           <button
             onClick={() => handleNavigate("/dashboard")}
-            className="hover:bg-[#122030] px-4 py-2 w-full text-[#94A3B8] hover:text-white text-sm text-left transition-colors cursor-pointer"
+            className="hover:bg-(--mainBGAccent) px-4 py-2 w-full text-[#94A3B8] hover:text-white text-sm text-left transition-colors cursor-pointer"
           >
             Dashboard
           </button>
 
-          <div className="border-[#122030] border-t">
+          <div className="border-red-500 border-t">
             <button
               onClick={handleLogout}
-              className="hover:bg-[#122030] px-4 py-2 w-full text-red-400 hover:text-red-300 text-sm text-left transition-colors cursor-pointer"
+              className="hover:bg-(--mainBGAccent) px-4 py-2 w-full text-red-400 hover:text-red-300 text-sm text-left transition-colors cursor-pointer"
             >
               Logout
             </button>
