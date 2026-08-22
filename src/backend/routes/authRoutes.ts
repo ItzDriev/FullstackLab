@@ -5,7 +5,7 @@ import {
   register,
   logout,
 } from "../controllers/authController.ts";
-import { authenticate, requireRole } from "../middleware/jwtMiddleware.ts";
+import { authenticate } from "../middleware/jwtMiddleware.ts";
 
 const router = express.Router();
 

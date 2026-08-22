@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../layouts/Navigation/Navbar";
-import Footer from "../../layouts/Navigation/Footer";
 import AdminDashboard from "./components/AdminDashboard";
 import { useAuth } from "../../context/AuthContext";
 

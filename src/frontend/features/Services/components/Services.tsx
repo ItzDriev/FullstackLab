@@ -1,20 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import BigButton from "../../../components/BigButton";
-import { createBooking } from "../../Booking/backend/booking.ts";
 
 function about() {
   const navigate = useNavigate();
-
-  async function handleBooking(
-    serviceType: string,
-    requestedTime: string,
-    notes?: string,
-  ) {
-    const result = await createBooking(serviceType, requestedTime, notes);
-    if (result.success) {
-      console.log(`Success booking ${serviceType}`);
-    }
-  }
 
   return (
     <section className="flex flex-col w-full min-h-[calc(100vh-4rem)] overflow-x-hidden">
