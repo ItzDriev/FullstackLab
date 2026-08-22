@@ -9,7 +9,8 @@
     "concurrent": "concurrently \"npm run dev\" \"npm run dev:backend\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "seed": "node src/backend/seed.ts"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.2",

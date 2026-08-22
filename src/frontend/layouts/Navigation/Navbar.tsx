@@ -59,7 +59,7 @@ function Navbar() {
         </nav>
 
         {auth.isLoggedIn ? (
-          <ProfileIcon></ProfileIcon>
+          <ProfileIcon className="hidden md:block mr-8"></ProfileIcon>
         ) : (
           <BigButton
             text="Login"
@@ -92,24 +92,74 @@ function Navbar() {
       </header>
       {/*Mobile Sidebar */}
       <nav
-        className={`fixed flex justify-center top-16 right-0 h-full w-[50%] bg-(--navBG) z-50 transform transition-transform duration-300 ease-in-out md:hidden ${navOpen ? "translate-x-0" : "translate-x-full"}`}
+        className={`fixed flex justify-center top-16 right-0 h-[calc(100vh-4rem)] w-[50%] bg-(--navBG) z-50 transform transition-transform duration-300 ease-in-out md:hidden ${navOpen ? "translate-x-0" : "translate-x-full"}`}
       >
-        <div className="flex flex-col">
-          <NavLink
-            to={"/"}
-            text={"Home"}
-            className={hoverEffects + sidebarNavLinkStyle}
-          />
-          <NavLink
-            to={"/services"}
-            text={"Services"}
-            className={hoverEffects}
-          />
-          <NavLink
-            to={"/about"}
-            text={"About"}
-            className={hoverEffects + sidebarNavLinkStyle}
-          />
+        <div className="flex flex-col justify-between items-center">
+          <div className="flex flex-col items-center">
+            {auth.isLoggedIn ? (
+              <ProfileIcon
+                className="mt-5"
+                dropDown={false}
+                onNavigate={() => setNavOpen(false)}
+              />
+            ) : (
+              <></>
+            )}
+            <NavLink
+              to={"/"}
+              text={"Home"}
+              className={hoverEffects + sidebarNavLinkStyle}
+            />
+            <NavLink
+              to={"/services"}
+              text={"Services"}
+              className={hoverEffects + sidebarNavLinkStyle}
+            />
+            <NavLink
+              to={"/about"}
+              text={"About"}
+              className={hoverEffects + sidebarNavLinkStyle}
+            />
+          </div>
+          {auth.isLoggedIn && (
+            <div className="flex flex-col items-center">
+              <h1 className="font-montserrat text-red-400 text-2xl">
+                Personal
+              </h1>
+              <hr className="border-1 border-red-400 w-[130%]" />
+              <NavLink
+                to={`/profile/${auth.user?.username}`}
+                text={"Profile"}
+                className={hoverEffects + sidebarNavLinkStyle}
+              />
+              <NavLink
+                to={`/setting`}
+                text={"Settings"}
+                className={hoverEffects + sidebarNavLinkStyle}
+              />
+              {auth.isAdmin && (
+                <NavLink
+                  to={"/admin"}
+                  text={"Admin"}
+                  className={hoverEffects + sidebarNavLinkStyle}
+                />
+              )}
+            </div>
+          )}
+
+          {auth.isLoggedIn ? (
+            <BigButton
+              text="LOGOUT"
+              className="shadow-none mb-5 px-3! py-3! text-sm!"
+              onClick={auth.logout}
+            />
+          ) : (
+            <BigButton
+              text="Login"
+              className="shadow-none mb-5 px-2! py-2! text-sm!"
+              onClick={() => navigate("/login")}
+            />
+          )}
           {/* Only render dropdown items when hovered */}
         </div>
       </nav>

@@ -30,22 +30,6 @@ function Footer() {
           <div className="flex gap-16">
             <div>
               <h4 className="mb-3 font-semibold text-[#94A3B8] text-xs uppercase tracking-widest">
-                Services
-              </h4>
-              <div className="flex flex-col gap-2">
-                <FooterLink
-                  text="VOD Review"
-                  onClick={() => navigate("/services")}
-                />
-                <FooterLink
-                  text="Hands-On Coaching"
-                  onClick={() => navigate("/services")}
-                />
-              </div>
-            </div>
-
-            <div>
-              <h4 className="mb-3 font-semibold text-[#94A3B8] text-xs uppercase tracking-widest">
                 Connect
               </h4>
               <div className="flex flex-col gap-2">

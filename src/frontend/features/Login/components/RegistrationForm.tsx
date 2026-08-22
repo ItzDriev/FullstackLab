@@ -25,13 +25,13 @@ function RegistrationForm({ setRegister }: Props) {
     }
   }
   return (
-    <main className="flex justify-center items-center bg-(--navBG)/80 shadow-[0_4px_12px_rgba(0,0,0,0.25),0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur-lg border border-red-500 w-1/4 min-h-3/4">
+    <main className="relative flex justify-center items-center bg-(--navBG)/80 shadow-[0_4px_12px_rgba(0,0,0,0.25),0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur-lg border border-red-500 w-full max-w-sm">
       {/*Cool red corners */}
       <div className="-top-3 -left-3 absolute border-red-500 border-t-2 border-l-2 w-20 h-20"></div>
       <div className="-right-3 -bottom-3 absolute border-red-500 border-r-2 border-b-2 w-20 h-20"></div>
 
       {/*The actual form */}
-      <form className="mt-7 w-44/50 h-45/50">
+      <form className="p-6 w-full">
         <div className="pb-4 border-red-500 border-b">
           <h1 className="text-white text-2xl">Authentication</h1>
           <h2 className="font-light text-red-400">Register</h2>

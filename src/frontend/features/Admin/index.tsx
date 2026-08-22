@@ -8,10 +8,6 @@ function index() {
   const auth = useAuth();
   const navigate = useNavigate();
 
-  /*
-    Wait for auth.loading to finish before deciding - on the first render
-    isAdmin is always false because checkAuth() hasn't resolved yet.
-  */
   useEffect(() => {
     if (!auth.loading && !auth.isAdmin) {
       navigate("/");

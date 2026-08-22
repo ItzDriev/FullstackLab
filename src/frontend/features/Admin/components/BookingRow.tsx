@@ -37,7 +37,7 @@ function BookingRow({ booking, onStatusChange, isUpdating }: BookingRowProps) {
 
       {/* What and when */}
       <div className="md:w-[27%]">
-        <p className="text-sm">{booking.serviceType}</p>
+        <p className="text-sm">{booking.serviceId?.name ?? "Removed service"}</p>
         <p className="text-[#94A3B8] text-xs">{formatted}</p>
       </div>
 

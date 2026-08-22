@@ -1,8 +1,25 @@
-import { useNavigate } from "react-router-dom";
-import BigButton from "../../../components/BigButton";
+import { useEffect, useState } from "react";
+import ServiceCard from "./ServiceCard";
+import { fetchServices } from "../backend/services";
+import type { Service } from "../backend/services";
 
-function about() {
-  const navigate = useNavigate();
+function Services() {
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function loadServices() {
+      const result = await fetchServices();
+      if (result.success) {
+        setServices(result.data ?? []);
+      } else {
+        setError(result.error ?? "Failed to load services");
+      }
+      setLoading(false);
+    }
+    loadServices();
+  }, []);
 
   return (
     <section className="flex flex-col w-full min-h-[calc(100vh-4rem)] overflow-x-hidden">
@@ -13,91 +30,38 @@ function about() {
       />
 
       {/* Dark overlay */}
-      <div className="z-10 fixed inset-0 bg-black/67 blur-5xl object-cover object-left" />
+      <div className="fixed inset-0 bg-black/67" />
 
       {/* Content layer */}
-      <div className="z-10 relative flex flex-col justify-center items-center w-full text-white">
-        <h1 className="mt-40 font-montserrat font-bold text-5xl">
+      <div className="z-10 relative flex flex-col justify-center items-center pb-20 w-full text-white">
+        <h1 className="mt-24 md:mt-40 font-montserrat font-bold text-4xl md:text-5xl text-center">
           Available Services
         </h1>
-        <section className="flex justify-center gap-15 w-full h-full">
-          <article className="flex flex-col bg-(--mainBG)/70 w-[25%] animate-rise h-[50vh] border-t-2 border-red-500 mt-10 transition-all duration-300 ease-out hover:-translate-y-4 hover:shadow-[0_0_25px_rgba(255,45,45,0.4)]">
-            <div className="flex flex-col gap-4 p-4">
-              <h1 className="font-montserrat font-bold text-xl">VOD REVIEW</h1>
-              <hr />
-              <p className="text-red-400">
-                In-depth analysis of your recorded gameplay. Will identify
-                critical mistakes in positioning, cooldown usage and general
-                awareness that are holding you back
-              </p>
-              <ul className="flex flex-col gap-4 marker:text-red-500 list-disc list-inside">
-                <li>Timestamped Actionable Feedback</li>
-                <li>Keybind Feedback</li>
-                <li>Written Summary & Goals</li>
-              </ul>
-            </div>
-            <div className="flex flex-col justify-center items-center mt-auto mb-4">
-              <BigButton
-                text="Book Session"
-                className="px-8! py-3! text-sm!"
-                onClick={() => navigate("/booking/vod-review")}
+
+        {loading ? (
+          <p className="mt-10 text-[#94A3B8]">Loading services…</p>
+        ) : error ? (
+          <p className="bg-red-500/10 mt-10 p-3 border border-red-500 rounded text-red-400">
+            {error}
+          </p>
+        ) : services.length === 0 ? (
+          <p className="mt-10 text-[#94A3B8]">
+            No services are available right now.
+          </p>
+        ) : (
+          <section className="flex flex-wrap justify-center gap-8 mx-auto mt-10 px-6 w-full max-w-6xl">
+            {services.map((service, i) => (
+              <ServiceCard
+                key={service._id}
+                service={service}
+                delayMs={i * 150}
               />
-            </div>
-          </article>
-          <article className="flex flex-col bg-(--mainBG)/70 w-[25%] animate-rise h-[50vh] border-t-2 border-red-500 mt-10 transition-all duration-300 ease-out hover:-translate-y-4 hover:shadow-[0_0_25px_rgba(255,45,45,0.4)] [animation-delay:150ms]">
-            <div className="flex flex-col gap-4 p-4">
-              <h1 className="font-montserrat font-bold text-xl">
-                HANDS ON SESSION
-              </h1>
-              <hr />
-              <p className="text-red-400">
-                Real-time guidance during a live raid. We will focus on applying
-                proper fundamentals and adapting to whats happening in the raid.
-              </p>
-              <ul className="flex flex-col gap-4 marker:text-red-500 list-disc list-inside">
-                <li>Voice Comms During Raid</li>
-                <li>Live Feedback</li>
-                <li>Post Session Q&A</li>
-              </ul>
-            </div>
-            <div className="flex flex-col justify-center items-center mt-auto mb-4">
-              <button
-                onClick={() => navigate("/booking/hands-on-session")}
-                className="px-8 py-3 border border-[#1a2d42] hover:border-red-500/40 font-bold text-[#94A3B8] hover:text-white text-sm uppercase tracking-[0.3em] transition-all cursor-pointer"
-              >
-                Book Session
-              </button>
-            </div>
-          </article>
-          <article className="flex flex-col bg-(--mainBG)/70 w-[25%] h-[50vh] animate-rise border-t-2 border-red-500 mt-10 transition-all duration-300 ease-out hover:-translate-y-4 hover:shadow-[0_0_25px_rgba(255,45,45,0.4)] [animation-delay:300ms]">
-            <div className="flex flex-col gap-4 p-4">
-              <h1 className="font-montserrat font-bold text-xl">
-                MACRO & UI ASSISTANCE
-              </h1>
-              <hr />
-              <p className="text-red-400">
-                I will help you setup your UI, Macros and Keybinds in accordance
-                to your wished, as well as provide suggestions for what I think
-                could be changed.
-              </p>
-              <ul className="flex flex-col gap-4 marker:text-red-500 list-disc list-inside">
-                <li>Addon Recommendations & Setup</li>
-                <li>Keybind Feedback</li>
-                <li>Macro Guide</li>
-              </ul>
-            </div>
-            <div className="flex flex-col justify-center items-center mt-auto mb-4">
-              <BigButton
-                text="Book Session"
-                className="px-8! py-3! text-sm!"
-                onClick={() => navigate("/booking/macro-ui-assistance")}
-              />
-            </div>
-          </article>
-        </section>
+            ))}
+          </section>
+        )}
       </div>
     </section>
   );
 }
 
-export default about;
+export default Services;

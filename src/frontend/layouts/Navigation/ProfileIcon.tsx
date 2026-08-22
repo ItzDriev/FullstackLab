@@ -4,10 +4,17 @@ import { useNavigate } from "react-router-dom";
 
 interface ProfileIconProps {
   className?: string;
+  /* When false the icon skips the menu and links straight to the profile. */
   dropDown?: boolean;
+  /* Lets the parent react to a navigation, e.g. close the mobile sidebar. */
+  onNavigate?: () => void;
 }
 
-function ProfileIcon({ className = "", dropDown = true }: ProfileIconProps) {
+function ProfileIcon({
+  className = "",
+  dropDown = true,
+  onNavigate,
+}: ProfileIconProps) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -30,6 +37,19 @@ function ProfileIcon({ className = "", dropDown = true }: ProfileIconProps) {
   function handleNavigate(path: string) {
     navigate(path);
     setOpen(false);
+    onNavigate?.();
+  }
+
+  /*
+    On the mobile sidebar there is no room for a dropdown, so the icon
+    acts as a plain link to the user's own profile instead.
+  */
+  function handleIconClick() {
+    if (dropDown) {
+      setOpen(!open);
+    } else {
+      handleNavigate(`/profile/${auth.user?.username}`);
+    }
   }
 
   async function handleLogout() {
@@ -39,10 +59,10 @@ function ProfileIcon({ className = "", dropDown = true }: ProfileIconProps) {
   }
 
   return (
-    <div className="z-[100] relative mr-8" ref={dropdownRef}>
+    <div className={`z-[100] relative ${className}`} ref={dropdownRef}>
       <div
-        className={`flex justify-center items-center hover:border-2 border-white rounded-full w-12 h-12 font-bold text-2xl cursor-pointer select-none overflow-hidden ${className}`}
-        onClick={() => setOpen(!open)}
+        className={`flex justify-center items-center hover:border-2 border-white rounded-full w-12 h-12 font-bold text-2xl cursor-pointer select-none overflow-hidden`}
+        onClick={handleIconClick}
       >
         <div className="flex justify-center items-center bg-red-500 w-full h-full text-white">
           {auth.user?.username.charAt(0)}

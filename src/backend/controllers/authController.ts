@@ -9,7 +9,6 @@ export async function register(req: Request, res: Response): Promise<void> {
     const { fullName, username, email, password } = req.body;
 
     //All fields required
-
     if (!fullName || !username || !email || !password) {
       res
         .status(400)
@@ -18,7 +17,6 @@ export async function register(req: Request, res: Response): Promise<void> {
     }
 
     //Fullname must be a string of letters and not less than 2 characters
-
     if (typeof fullName !== "string" || fullName.trim().length < 2) {
       res.status(400).json({
         success: false,
@@ -28,7 +26,6 @@ export async function register(req: Request, res: Response): Promise<void> {
     }
 
     //Username must be string and at least 2 characters
-
     if (typeof username !== "string" || username.trim().length < 2) {
       res.status(400).json({
         success: false,

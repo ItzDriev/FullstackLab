@@ -1,6 +1,6 @@
 interface Session {
   _id: string;
-  serviceType: string;
+  serviceId: { _id: string; name: string; durationMinutes: number } | null;
   requestedTime: string;
   status: "pending" | "confirmed" | "cancelled" | "completed";
   notes?: string;
@@ -26,7 +26,9 @@ function SessionCard({ session }: SessionCardProps) {
   return (
     <div className="flex flex-col gap-1 bg-(--navBG) shrink-0 p-3 border border-red-500/40 rounded-xl w-[90%] text-white">
       <div className="flex justify-between items-center gap-2">
-        <h3 className="font-semibold text-sm">{session.serviceType}</h3>
+        <h3 className="font-semibold text-sm">
+          {session.serviceId?.name ?? "Removed service"}
+        </h3>
         <span
           className={`shrink-0 px-2 py-0.5 border rounded-full text-[10px] uppercase tracking-wide ${STATUS_STYLES[session.status]}`}
         >

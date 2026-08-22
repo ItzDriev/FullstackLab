@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import BookingRow from "./BookingRow";
+import ServiceManager from "./ServiceManager";
 import { fetchAllBookings, updateBookingStatus } from "../backend/admin";
 import type { AdminBooking } from "../backend/admin";
 
@@ -22,13 +23,10 @@ function AdminDashboard() {
   const [error, setError] = useState<string | null>(null);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
 
+  const [tab, setTab] = useState<"sessions" | "services">("sessions");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [search, setSearch] = useState("");
 
-  /*
-    showSpinner is false for the background refreshes so the list
-    doesn't flash back to a loading state every 15 seconds.
-  */
   const loadBookings = useCallback(async (showSpinner: boolean) => {
     if (showSpinner) setLoading(true);
     const result = await fetchAllBookings();
@@ -43,13 +41,12 @@ function AdminDashboard() {
     if (showSpinner) setLoading(false);
   }, []);
 
-  // Initial load.
   useEffect(() => {
     loadBookings(true);
   }, [loadBookings]);
 
-  // Auto-refresh. The cleanup clears the interval when the component unmounts,
-  // otherwise it would keep firing (and setting state) after the page is gone.
+  // Auto-refresh as per the requirement :> The cleanup clears the interval when the component unmounts,
+  // otherwise it would keep firing (and setting state) even after the page is gone, which would be a bit goofy
   useEffect(() => {
     const intervalId = setInterval(() => {
       loadBookings(false);
@@ -103,69 +100,95 @@ function AdminDashboard() {
               {bookings.length} total sessions · {pendingCount} awaiting review
             </h2>
           </div>
-          <button
-            onClick={() => loadBookings(true)}
-            className="hover:bg-red-500/20 px-4 py-2 border border-red-500 rounded text-xs uppercase tracking-widest transition-colors cursor-pointer"
-          >
-            Refresh
-          </button>
+          {tab === "sessions" && (
+            <button
+              onClick={() => loadBookings(true)}
+              className="hover:bg-red-500/20 px-4 py-2 border border-red-500 rounded text-xs uppercase tracking-widest transition-colors cursor-pointer"
+            >
+              Refresh
+            </button>
+          )}
         </div>
 
-        {/* Filters */}
-        <div className="flex md:flex-row flex-col gap-4 md:items-center">
-          <div className="flex flex-wrap gap-2">
-            {STATUS_FILTERS.map((status) => (
-              <button
-                key={status}
-                onClick={() => setStatusFilter(status)}
-                className={`px-3 py-1 border rounded-full text-xs uppercase tracking-wide transition-colors cursor-pointer ${
-                  statusFilter === status
-                    ? "bg-red-500/20 border-red-500 text-white"
-                    : "border-red-500/30 text-[#94A3B8] hover:border-red-500/60"
-                }`}
-              >
-                {status}
-              </button>
-            ))}
-          </div>
-
-          <input
-            type="text"
-            placeholder="Search by username"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="bg-transparent px-3 py-1.5 border border-red-500/40 focus:border-red-500 rounded outline-none md:w-64 text-sm placeholder:text-gray-500"
-          />
+        {/* Tabs */}
+        <div className="flex gap-2 border-red-500/30 border-b">
+          {(["sessions", "services"] as const).map((name) => (
+            <button
+              key={name}
+              onClick={() => setTab(name)}
+              className={`px-5 py-2 text-xs uppercase tracking-widest transition-colors cursor-pointer border-b-2 -mb-px ${
+                tab === name
+                  ? "border-red-500 text-white"
+                  : "border-transparent text-[#94A3B8] hover:text-white"
+              }`}
+            >
+              {name}
+            </button>
+          ))}
         </div>
 
-        {/* Error banner - shown above the list so a failed refresh
-            doesn't wipe out the data already on screen. */}
-        {error && (
-          <p className="bg-red-500/10 p-3 border border-red-500 rounded text-red-400 text-sm">
-            {error}
-          </p>
-        )}
-
-        {/* The list */}
-        {loading ? (
-          <p className="mt-10 text-[#94A3B8] text-center">Loading sessions…</p>
-        ) : visible.length === 0 ? (
-          <p className="mt-10 text-[#94A3B8] text-center">
-            {bookings.length === 0
-              ? "No sessions have been booked yet."
-              : "No sessions match those filters."}
-          </p>
+        {tab === "services" ? (
+          <ServiceManager />
         ) : (
-          <div className="flex flex-col gap-3 pr-2 max-h-[60vh] overflow-y-auto session-scroll">
-            {visible.map((booking) => (
-              <BookingRow
-                key={booking._id}
-                booking={booking}
-                onStatusChange={handleStatusChange}
-                isUpdating={updatingId === booking._id}
+          <>
+            {/* Filters */}
+            <div className="flex md:flex-row flex-col md:items-center gap-4">
+              <div className="flex flex-wrap gap-2">
+                {STATUS_FILTERS.map((status) => (
+                  <button
+                    key={status}
+                    onClick={() => setStatusFilter(status)}
+                    className={`px-3 py-1 border rounded-full text-xs uppercase tracking-wide transition-colors cursor-pointer ${
+                      statusFilter === status
+                        ? "bg-red-500/20 border-red-500 text-white"
+                        : "border-red-500/30 text-[#94A3B8] hover:border-red-500/60"
+                    }`}
+                  >
+                    {status}
+                  </button>
+                ))}
+              </div>
+
+              <input
+                type="text"
+                placeholder="Search by username"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="bg-transparent px-3 py-1.5 border border-red-500/40 focus:border-red-500 rounded outline-none md:w-64 placeholder:text-gray-500 text-sm"
               />
-            ))}
-          </div>
+            </div>
+
+            {/* Error */}
+            {error && (
+              <p className="bg-red-500/10 p-3 border border-red-500 rounded text-red-400 text-sm">
+                {error}
+              </p>
+            )}
+
+            {/* The list */}
+            {loading ? (
+              <p className="mt-10 text-[#94A3B8] text-center">
+                Loading sessions…
+              </p>
+            ) : visible.length === 0 ? (
+              <p className="mt-10 text-[#94A3B8] text-center">
+                {bookings.length === 0
+                  ? "No sessions have been booked yet."
+                  : "No sessions match those filters."}
+              </p>
+            ) : (
+              <div className="flex flex-col gap-3 pr-2 max-h-[60vh] overflow-y-auto session-scroll">
+                {visible.map((booking) => (
+                  <BookingRow
+                    key={booking._id}
+                    booking={booking}
+                    onStatusChange={handleStatusChange}
+                    isUpdating={updatingId === booking._id}
+                  />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </section>

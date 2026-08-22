@@ -1,13 +1,29 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import InputField from "../../../components/InputField";
 import BigButton from "../../../components/BigButton";
-import { service_types } from "../backend/serviceTypes";
 import { createBooking } from "../backend/booking";
+import { fetchServiceBySlug } from "../../Services/backend/services";
+import type { Service } from "../../Services/backend/services";
 import { useParams } from "react-router-dom";
 
 function BookingForm() {
-  const { serviceType } = useParams();
-  const serviceName = serviceType ? service_types[serviceType] : undefined;
+  //The url carries the slug; the service itself comes from the database
+  const { serviceType: slug } = useParams();
+  const [service, setService] = useState<Service | null>(null);
+  const [serviceLoading, setServiceLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadService() {
+      if (!slug) {
+        setServiceLoading(false);
+        return;
+      }
+      const result = await fetchServiceBySlug(slug);
+      if (result.success) setService(result.data ?? null);
+      setServiceLoading(false);
+    }
+    loadService();
+  }, [slug]);
 
   const [requestedTime, setRequestedTime] = useState("");
   const [notes, setNotes] = useState("");
@@ -21,9 +37,10 @@ function BookingForm() {
   }
 
   async function handleSubmit() {
-    if (!serviceName) return;
-    const result = await createBooking(serviceName, requestedTime, notes);
+    if (!service || isSubmitting) return;
     setIsSubmitting(true);
+
+    const result = await createBooking(service.slug, requestedTime, notes);
 
     if (result.success) {
       setStatusIsError(false);
@@ -35,8 +52,6 @@ function BookingForm() {
       );
       setIsSubmitting(false);
     }
-
-    console.log({ serviceType: serviceName, requestedTime, notes });
   }
 
   return (
@@ -66,11 +81,18 @@ function BookingForm() {
             <div className="pb-4 border-red-500 border-b">
               <h1 className="text-white text-2xl">Book a Session</h1>
               <h2 className="font-light text-red-400">
-                {serviceName ?? "Unknown Service"}
+                {service?.name ?? (serviceLoading ? "Loading…" : "Unknown Service")}
               </h2>
+              {service && (
+                <p className="mt-1 text-[#94A3B8] text-sm">
+                  {service.priceSek} kr · {service.durationMinutes} min
+                </p>
+              )}
             </div>
 
-            {!serviceName ? (
+            {serviceLoading ? (
+              <p className="mt-7 text-[#94A3B8]">Loading service…</p>
+            ) : !service ? (
               <p className="mt-7 text-[#94A3B8]">
                 We couldn't find that service. Head back to{" "}
                 <span className="text-red-400">Services</span> and pick one from

@@ -27,8 +27,8 @@ function index() {
       />
 
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/30 blur-5xl" />
-      <div className="w-full h-[calc(100vh-4rem)] bg-(--mainBG) flex justify-center items-center">
+      <div className="fixed inset-0 bg-black/67" />
+      <div className="z-10 relative flex justify-center items-center px-4 py-10 w-full min-h-[calc(100vh-4rem)]">
         {register ? (
           <RegistrationForm setRegister={setRegister}></RegistrationForm>
         ) : (

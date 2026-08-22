@@ -8,82 +8,84 @@ function about() {
       />
 
       {/* Dark overlay */}
-      <div className="z-10 fixed inset-0 bg-black/67 blur-5xl object-cover object-left" />
+      <div className="fixed inset-0 bg-black/67" />
 
       {/* Content layer */}
-      <div className="z-10 relative flex flex-col justify-center items-center w-full text-white">
-        <section className="flex justify-center items-center w-full h-full">
-          {/*Left Side */}
-          <section className="flex flex-col justify-center items-center px-20 w-full h-full">
-            <div className="flex justify-start w-full">
-              <h1 className="pb-3 pl-3 font-montserrat font-bold text-7xl">
-                About Me
-              </h1>
+      <div className="z-10 relative w-full text-white">
+        <div className="mx-auto px-8 py-16 max-w-6xl">
+          <h1 className="pb-6 font-montserrat font-bold text-5xl md:text-7xl">
+            About Me
+          </h1>
+
+          <div className="gap-10 grid lg:grid-cols-[1.4fr_1fr]">
+            {/*Left Side */}
+            <div className="flex flex-col gap-5 min-w-0">
+              {/*Top Box */}
+              <div className="flex flex-col items-center bg-(--mainBG)/67 shadow-[0_0_10px_rgba(255,45,45,0.8)] border-2 border-red-500 rounded-sm w-full">
+                <div className="flex flex-col items-center py-4 w-full font-montserrat font-bold text-lg text-center">
+                  <div className="flex flex-col items-center w-full">
+                    <h2 className="text-white text-3xl">Credentials</h2>
+                    <hr className="mt-1 border-red-500/60 w-[95%]" />
+                  </div>
+                  {/* Three equal columns so a stat can never wrap onto its
+                      own line. The dividers replace the old separators. */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 mt-2 sm:divide-x divide-y sm:divide-y-0 divide-red-500/40 w-full">
+                    <p className="px-3 py-3">
+                      <span className="text-red-500">SUB 37</span>
+                      <br />
+                      <span className="font-light text-white text-base">
+                        Naxx XP [WR]
+                      </span>
+                    </p>
+                    <p className="px-3 py-3">
+                      <span className="text-red-500">300+</span>
+                      <br />
+                      <span className="font-light text-white text-base">
+                        Naxxes Cleared
+                      </span>
+                    </p>
+                    <p className="px-3 py-3">
+                      <span className="text-red-500">#1 DPS</span>
+                      <br />
+                      <span className="font-light text-white text-base">
+                        World Contender
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/*Bottom Box */}
+              <div className="bg-(--mainBG)/70 shadow-[0_0_10px_rgba(255,45,45,0.8)] border-2 border-red-500 rounded-sm w-full">
+                <div className="p-6">
+                  <h2 className="font-montserrat font-bold text-red-300 text-2xl">
+                    Introduction
+                  </h2>
+                  <hr className="mt-1 mb-3 border-red-300/60" />
+                  <span className="font-bold">
+                    Hey, I'm Anton 'Driev' Andersson
+                  </span>
+                  <p className="mt-1 leading-relaxed">
+                    I'm a World of Warcraft player who mains the 'Warrior' class
+                    and specializes in high-level PvE raiding performance. I'm
+                    the most proficient specifically in the VANILLA version of
+                    World of Warcraft, however I am pretty decent in Retail as
+                    well despite having barely played it
+                  </p>
+                </div>
+              </div>
             </div>
 
-            {/*Top Box */}
-            <div className="bg-(--mainBG)/67 w-full min-h-[30%] border-2 border-red-500 rounded-sm flex flex-col items-center shadow-[0_0_10px_rgba(255,45,45,0.8)]">
-              <div className="flex flex-col items-center py-2 font-montserrat font-bold text-lg text-center">
-                <div className="flex flex-col items-center w-full">
-                  <h1 className="text-white text-3xl">Credentials</h1>
-                  <hr className="mt-1 w-[95%]" />
-                </div>
-                <div className="flex justify-center items-center gap-15 py-2 text-red-500">
-                  <p>
-                    SUB 37
-                    <br />
-                    <span className="font-light text-white">Naxx XP [WR]</span>
-                  </p>
-                  <span className="text-white text-5xl">·</span>
-                  <p>
-                    300+
-                    <br />
-                    <span className="font-light text-white">
-                      Naxxes Cleared
-                    </span>
-                  </p>
-                  <span className="text-white text-5xl">·</span>
-                  <p>
-                    #1 DPS
-                    <br />
-                    <span className="font-light text-white">
-                      World Contender
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            {/*Bottom Box */}
-            <div className="bg-(--mainBG)/70 h-50 w-full rounded-sm border-2 mt-5 ">
-              <div className="p-6">
-                <h1 className="font-montserrat font-bold text-red-300 text-2xl">
-                  Introduction
-                </h1>
-                <hr className="mb-2 text-red-300" />
-                <span className="font-bold">
-                  Hey, I'm Anton 'Driev' Andersson
-                </span>
-                <p className="mt-1">
-                  I'm a World of Warcraft player who mains the 'Warrior' class
-                  and specializes in high-level PvE raiding performance. I'm the
-                  most proficient specifically in the VANILLA version of World
-                  of Warcraft, however I am pretty decent in Retail as well
-                  despite having barely played it
-                </p>
-              </div>
-            </div>
-          </section>
-          {/*Right Side */}
-          <section className="flex justify-center w-full">
-            <div className="top-20 sticky flex justify-center items-center h-[calc(100vh-5rem)]">
+            {/*Right Side */}
+            <div className="min-w-0">
               <img
-                src="./AntonMonkeySquare.png"
+                src="/AntonMonkeySquare.png"
                 alt="IRL Picture of Driev chilling in a tree"
-                className="top-55 right-[15%] fixed border-3 border-red-500 rounded-lg w-[20%] object-cover aspect-[3/4]"
+                className="top-24 sticky shadow-[0_0_10px_rgba(255,45,45,0.8)] mx-auto border-3 border-red-500 rounded-lg w-full max-w-sm object-cover aspect-[3/4]"
               />
             </div>
-          </section>
-        </section>
+          </div>
+        </div>
       </div>
     </section>
   );
