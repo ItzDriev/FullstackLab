@@ -69,12 +69,14 @@ function ProfileIcon({ className = "", dropDown = true }: ProfileIconProps) {
           >
             Settings
           </button>
-          <button
-            onClick={() => handleNavigate("/dashboard")}
-            className="hover:bg-(--mainBGAccent) px-4 py-2 w-full text-[#94A3B8] hover:text-white text-sm text-left transition-colors cursor-pointer"
-          >
-            Dashboard
-          </button>
+          {auth.isAdmin && (
+            <button
+              onClick={() => handleNavigate("/admin")}
+              className="hover:bg-(--mainBGAccent) px-4 py-2 w-full text-[#94A3B8] hover:text-white text-sm text-left transition-colors cursor-pointer"
+            >
+              Admin Dashboard
+            </button>
+          )}
 
           <div className="border-red-500 border-t">
             <button

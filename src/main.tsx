@@ -10,6 +10,7 @@ import Services from "./frontend/features/Services/index";
 import About from "./frontend/features/About/index";
 import Profile from "./frontend/features/Profile/index";
 import Booking from "./frontend/features/Booking/index";
+import Admin from "./frontend/features/Admin/index";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,11 @@ const router = createBrowserRouter([
   {
     path: "/booking/:serviceType",
     element: <Booking />,
+    errorElement: <NotFoundPage />,
+  },
+  {
+    path: "/admin",
+    element: <Admin />,
     errorElement: <NotFoundPage />,
   },
 ]);

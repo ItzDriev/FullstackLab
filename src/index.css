@@ -45,3 +45,25 @@
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
+
+.session-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(239 68 68 / 0.5) transparent;
+}
+
+.session-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.session-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.session-scroll::-webkit-scrollbar-thumb {
+  background-color: rgb(239 68 68 / 0.5);
+  border-radius: 9999px;
+}
+
+.session-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(239 68 68 / 0.8);
+}

@@ -9,7 +9,7 @@ function ReturnToHomePage({ fixed = false }: Props) {
     <Link
       id="return-button"
       to="/"
-      className="top-5 left-5 fixed flex justify-center items-center bg-transparent hover:bg-blue-600 px-4 py-2 border border-blue-600 hover:border-transparent rounded-full w-10 h-10 font-semibold text-blue-600 hover:text-white text-center"
+      className="top-5 left-5 fixed flex justify-center items-center bg-transparent hover:bg-red-500 px-4 py-2 border border-red-500 hover:border-transparent rounded-full w-10 h-10 font-semibold text-red-500 hover:text-white text-center"
     >
       <i className="fa-arrow-left fa-solid"></i>
     </Link>
@@ -17,7 +17,7 @@ function ReturnToHomePage({ fixed = false }: Props) {
     <Link
       id="return-button"
       to="/"
-      className="top-5 left-5 flex justify-center items-center bg-transparent hover:bg-blue-600 px-4 py-2 border border-blue-600 hover:border-transparent rounded-full w-10 h-10 font-semibold text-blue-600 hover:text-white text-center"
+      className="top-5 left-5 flex justify-center items-center bg-transparent hover:bg-red-500 px-4 py-2 border border-red-500 hover:border-transparent rounded-full w-10 h-10 font-semibold text-red-500 hover:text-white text-center"
     >
       <i className="fa-arrow-left fa-solid"></i>
     </Link>

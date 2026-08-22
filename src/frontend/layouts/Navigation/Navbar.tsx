@@ -30,11 +30,7 @@ function Navbar() {
       >
         <div className="flex items-center ml-8 md:ml-15">
           <NavLink
-            to={
-              import.meta.env.VITE_DEV === "false"
-                ? "/random-route-1"
-                : "/random-route-2"
-            }
+            to={import.meta.env.VITE_DEV === "false" ? "/" : "/"}
             className={"font-bold text-2xl!"}
             text="Driev's Coaching"
           />

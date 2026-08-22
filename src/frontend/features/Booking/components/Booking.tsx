@@ -1,16 +1,13 @@
 import { useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import InputField from "../../../components/InputField";
 import BigButton from "../../../components/BigButton";
 import { service_types } from "../backend/serviceTypes";
 import { createBooking } from "../backend/booking";
-import { useAuth } from "../../../context/AuthContext";
+import { useParams } from "react-router-dom";
 
 function BookingForm() {
   const { serviceType } = useParams();
   const serviceName = serviceType ? service_types[serviceType] : undefined;
-  const navigate = useNavigate();
-  const auth = useAuth();
 
   const [requestedTime, setRequestedTime] = useState("");
   const [notes, setNotes] = useState("");

@@ -57,14 +57,14 @@ export async function register(req: Request, res: Response): Promise<void> {
     const emailInUse = await User.findOne({ email });
 
     if (emailInUse) {
-      res.status(400).json({ success: false, error: "Email already in use" });
+      res.status(409).json({ success: false, error: "Email already in use" });
     }
 
     // Check if username is available
     const usernameInUse = await User.findOne({ username });
     if (usernameInUse) {
       res
-        .status(400)
+        .status(409)
         .json({ success: false, error: "Username already in use" });
     }
 
